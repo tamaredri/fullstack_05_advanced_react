@@ -10,12 +10,12 @@ const SinglePost = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await axios.get(`http://localhost:4000/posts/${id}`);
+      const response = await axios.get(`http://localhost:3000/posts/${id}`);
       setPost(response.data);
     };
 
     const fetchComments = async () => {
-      const response = await axios.get(`http://localhost:4000/posts/${id}/comments`);
+      const response = await axios.get(`http://localhost:3000/posts/${id}/comments`);
       setComments(response.data);
     };
 
@@ -25,7 +25,7 @@ const SinglePost = () => {
 
   const handleAddComment = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const response = await axios.post(`http://localhost:4000/posts/${id}/comments`, {
+    const response = await axios.post(`http://localhost:3000/posts/${id}/comments`, {
       userId: user.id,
       body: newComment
     });

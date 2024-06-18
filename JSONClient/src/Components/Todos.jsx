@@ -8,7 +8,7 @@ const Todos = () => {
   useEffect(() => {
     const fetchTodos = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.get(`http://localhost:4000/todos?userId=${user.id}`);
+      const response = await axios.get(`http://localhost:3000/todos?userId=${user.id}`);
       setTodos(response.data);
     };
     fetchTodos();
@@ -16,7 +16,7 @@ const Todos = () => {
 
   const handleAddTodo = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const response = await axios.post('http://localhost:4000/todos', {
+    const response = await axios.post('http://localhost:3000/todos', {
       userId: user.id,
       title: newTodo,
       completed: false
@@ -27,7 +27,7 @@ const Todos = () => {
 
   const handleToggleComplete = async (id) => {
     const todo = todos.find(todo => todo.id === id);
-    const response = await axios.put(`http://localhost:4000/todos/${id}`, {
+    const response = await axios.put(`http://localhost:3000/todos/${id}`, {
       ...todo,
       completed: !todo.completed
     });
@@ -35,7 +35,7 @@ const Todos = () => {
   };
 
   const handleDeleteTodo = async (id) => {
-    await axios.delete(`http://localhost:4000/todos/${id}`);
+    await axios.delete(`http://localhost:3000/todos/${id}`);
     setTodos(todos.filter(todo => todo.id !== id));
   };
 

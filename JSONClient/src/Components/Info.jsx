@@ -10,7 +10,7 @@ const Info = () => {
     const fetchUserInfo = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        const response = await axios.get(`http://localhost:4000/users/${user.id}`);
+        const response = await axios.get(`http://localhost:3000/users/${user.id}`);
         setUserInfo(response.data);
         setLoading(false);
       } catch (err) {

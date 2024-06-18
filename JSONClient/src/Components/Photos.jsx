@@ -9,14 +9,14 @@ const Photos = () => {
   useEffect(() => {
     const fetchAlbums = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.get(`http://localhost:4000/albums?userId=${user.id}`);
+      const response = await axios.get(`http://localhost:3000/albums?userId=${user.id}`);
       setAlbums(response.data);
     };
     fetchAlbums();
   }, []);
 
   const handleAlbumClick = async (albumId) => {
-    const response = await axios.get(`http://localhost:4000/albums/${albumId}/photos`);
+    const response = await axios.get(`http://localhost:3000/albums/${albumId}/photos`);
     setPhotos(response.data);
     setSelectedAlbum(albumId);
   };

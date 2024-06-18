@@ -10,7 +10,7 @@ const Albums = () => {
   useEffect(() => {
     const fetchAlbums = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.get(`http://localhost:4000/albums?userId=${user.id}`);
+      const response = await axios.get(`http://localhost:3000/albums?userId=${user.id}`);
       setAlbums(response.data);
     };
     fetchAlbums();
@@ -19,7 +19,7 @@ const Albums = () => {
   const handleAlbumClick = async (albumId) => {
     setLoading(true);
     setSelectedAlbum(albumId);
-    const response = await axios.get(`http://localhost:4000/albums/${albumId}/photos`);
+    const response = await axios.get(`http://localhost:3000/albums/${albumId}/photos`);
     setPhotos(response.data);
     setLoading(false);
   };
@@ -30,7 +30,7 @@ const Albums = () => {
       <ul>
         {albums.map(album => (
           <li key={album.id} onClick={() => handleAlbumClick(album.id)}>
-            {album.title}
+            {album.id}, {album.title}
           </li>
         ))}
       </ul>
