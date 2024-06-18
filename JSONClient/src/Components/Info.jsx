@@ -8,6 +8,7 @@ const Info = () => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
+      console.log('done')
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         const response = await axios.get(`http://localhost:3000/users/${user.id}`);
