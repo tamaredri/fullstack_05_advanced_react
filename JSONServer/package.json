@@ -1,7 +1,7 @@
 {
   "name": "jsonserver",
   "version": "1.0.0",
-  "description": "access to jasonplacholder API",
+  "description": "access to jsonplacholder API",
   "main": "index.js",
   "scripts": {
     "json:server": "json-server --watch db.json"

@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+JSONServer/db.json
+JSONServer/package.json
