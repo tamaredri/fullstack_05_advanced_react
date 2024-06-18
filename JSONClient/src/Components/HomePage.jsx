@@ -29,6 +29,7 @@ const HomePage = ({ onLogout }) => {
         <button onClick={onLogout}>Logout</button>
         <nav>
           <ul>
+            <li><Link to="/homePage/">Home</Link></li>
             <li><Link to="/homePage/posts">Posts</Link></li>
             <li><Link to="/homePage/albums">Albums</Link></li>
             <li><Link to="/homePage/todos">Todos</Link></li>

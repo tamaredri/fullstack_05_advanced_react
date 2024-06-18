@@ -1,11 +1,12 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
-import NewPost from '../Components/NewPost';
-import ListPosts from '../Components/ListPosts';
-import Albums from '../Components/Albums';
-import Todos from '../Components/Todos';
+
 import Info from '../Components/Info';
 import HomePage from '../Components/HomePage';
+
+import AlbumsRoutes from './AlbumsRoutes';
+import PostsRoutes from './PostsRoutes';
+import TodosRoutes from './TodosRoutes';
 
 function HomeRoutes({onLogout}) {
     return (
@@ -20,23 +21,6 @@ function HomeRoutes({onLogout}) {
             </Routes>
         </main>
     )
-}
-
-const PostsRoutes = () => {
-    return (
-      <Routes>
-        <Route path="/" element={<ListPosts />} />
-        <Route path="/new" element={<NewPost />} />
-      </Routes>
-    );
-  };
-
-const AlbumsRoutes = () => {
-    return <Albums />;
-}
-
-const TodosRoutes = () => {
-    return <Todos />;
 }
 
   
