@@ -47,10 +47,8 @@ const RegisterFormPage = ({onRegister}) => {
         };
 
         try {
-            console.log(formData);
-            await axios.post('http://localhost:3000/users', formData, { 'Headers': { 'Content-Type': "application/json" } });
-            // Handle successful submission (e.g., redirect, show a message)
-            onRegister(username);
+            const user = await axios.post('http://localhost:3000/users', formData, { 'Headers': { 'Content-Type': "application/json" } });
+            onRegister(user.data.id);
         } catch (error) {
             console.error('Error submitting form', error);
         }

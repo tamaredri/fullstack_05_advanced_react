@@ -7,8 +7,6 @@ const LoginPage = ({ onLogin }) => {
   const username = useRef('');
   const password = useRef('');
 
-  // const username = useRef('');
-
   const handleLogin = async (e) => {
     e.preventDefault();
     const u = username.current.value;
@@ -17,9 +15,8 @@ const LoginPage = ({ onLogin }) => {
     try {
       const users = await axios.get(`http://localhost:3000/users`);
       const user = users.data.find(user => user.username === u && user.website === p);
-
       if (user) {
-        onLogin(u);
+        onLogin(user.id);
       } else {
         setError('Invalid username or password');
       }

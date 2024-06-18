@@ -7,7 +7,7 @@ import HomeRoutes from './Routes/HomeRoutes';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(()=>{
-    const storedUsername = localStorage.getItem('username');
+    const storedUsername = localStorage.getItem('user');
     if (storedUsername) {
       return true;
     } else {
@@ -17,20 +17,20 @@ const App = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = (username) => {
-    localStorage.setItem('username', username);
+  const handleLogin = (userID) => {
+    localStorage.setItem('user', userID);
     setIsLoggedIn(true);
     navigate('/homePage', {replace: true});
   };
 
-  const handleRegister = (username) => {
-    localStorage.setItem('username', username);
+  const handleRegister = (userID) => {
+    localStorage.setItem('user', userID);
     setIsLoggedIn(true);
     navigate('/homePage', {replace: true});
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('username');
+    localStorage.removeItem('user');
     setIsLoggedIn(false);
     navigate('/login', {replace: true});
   };

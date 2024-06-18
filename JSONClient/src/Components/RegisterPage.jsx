@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { Link, useNavigate, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
-const RegisterPage = ({onRegister}) => {
+const RegisterPage = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const verifyPasswordRef = useRef();

@@ -6,9 +6,9 @@ const HomePage = ({ onLogout }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const username = localStorage.getItem('username');
-    if (username) {
-      fetch(`http://localhost:3000/users?username=${username}`)
+    const user = localStorage.getItem('user');
+    if (user) {
+      fetch(`http://localhost:3000/users?id=${user}`)
         .then(response => response.json())
         .then(data => {
           if (data.length > 0) {
