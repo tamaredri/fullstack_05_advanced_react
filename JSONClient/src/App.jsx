@@ -41,7 +41,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
             <Route path="/register/*" element={<Registration onRegister={handleRegister} />} />
             <Route path="/homePage/*" element={<HomeRoutes onLogout={handleLogout}  />} />
-            <Route path="/" element={isLoggedIn === true? <Navigate to="/homePage" replace={true} /> : <Navigate to="/login" replace={true}/>} />
+            <Route index element={isLoggedIn === true? <Navigate to="/homePage" replace={true} /> : <Navigate to="/login" replace={true}/>} />
           </Routes>
       </>
   );

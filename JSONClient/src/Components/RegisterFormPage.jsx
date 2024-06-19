@@ -4,7 +4,7 @@ import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterFormPage = ({onRegister}) => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const location = useLocation();
     const { username, password } = location.state || {};
 
