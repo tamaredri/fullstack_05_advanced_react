@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const Albums = () => {
-  const [albums, setAlbums] = useState([]);
   const newAlbumName = useRef('');
+  const [albums, setAlbums] = useState([]);
   const [addingAlbum, setAddingAlbum] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,6 @@ const Albums = () => {
 
       const response = await axios.get(`http://localhost:3000/albums`);
       const existingAlbums = response.data;
-      console.log(existingAlbums)
       const largestAlbumId = existingAlbums.reduce((maxId, album) => {
         return parseInt(album.id) > maxId ? parseInt(album.id) : maxId;
       }, 0);
@@ -44,14 +43,19 @@ const Albums = () => {
 
   const handleDeleteAlbum = async (albumId) => {
     try {
-      const user = JSON.parse(localStorage.getItem('user'));
+      const photosResponse = await axios.get(`http://localhost:3000/photos?albumId=${albumId}`);
+      const photoIds = photosResponse.data.map(photo => photo.id);
+      console.log(photoIds);
+      
+      await Promise.all(photoIds.map(photoId =>
+        axios.delete(`http://localhost:3000/photos/${photoId}`)
+      ));
 
-      //await axios.delete(`http://localhost:3000/photos?albumId=${albumId}&userId=${user}`);
-      await axios.delete(`http://localhost:3000/albums/${albumId}?userId=${user}`);
+      await axios.delete(`http://localhost:3000/albums/${albumId}`);
 
       setAlbums(prevAlbums => prevAlbums.filter(album => album.id !== albumId));
     } catch (error) {
-      console.error('Error deleting album:', error);
+      console.error('Error deleting album and photos:', error);
     }
   };
 
@@ -79,22 +83,6 @@ const Albums = () => {
           </li>
         ))}
       </ul>
-
-      {/* {loading && <p>Loading photos...</p>}
-      {selectedAlbum && !loading && (
-        <div>
-          <h3>Photos</h3>
-          <Link to={`/albums/${selectedAlbum}`}>View Album Details</Link>
-          <ul>
-            {photos.map(photo => (
-              <li key={photo.id}>
-                <img src={photo.thumbnailUrl} alt={photo.title} />
-                <p>{photo.title}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )} */}
     </div>
   );
 };

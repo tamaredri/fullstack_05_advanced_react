@@ -23,7 +23,14 @@ const RegisterFormPage = ({onRegister}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const response = await axios.get(`http://localhost:3000/users`);
+        const existingUsers = response.data;
+        const largestUser = existingUsers.reduce((maxId, user) => {
+          return parseInt(user.id) > maxId ? parseInt(user.id) : maxId;
+        }, 0);
+
         const formData = {
+            id: String(largestUser + 1),
             name: nameRef.current.value,
             username: username,
             email: emailRef.current.value,
