@@ -7,8 +7,14 @@ function SingleAlbum() {
 
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [editingPhotoId, setEditingPhotoId] = useState(null); // Track which photo is being edited
-    const [newPhotoTitle, setNewPhotoTitle] = useState(''); // For adding new photo title
+    const [editingPhotoId, setEditingPhotoId] = useState(null);
+    const [editedTitle, setEditedTitle] = useState('');
+    const [editedUrl, setEditedUrl] = useState('');
+    const [addingPhoto, setAddingPhoto] = useState(false);
+
+    const newPhotoTitle = useRef('');
+    const newPhotoUrl = useRef('');
+    const newPhotoThumbnail = useRef('');
 
     const pageRef = useRef(1); // Track current page for pagination
 
@@ -16,84 +22,124 @@ function SingleAlbum() {
         const fetchPhotos = async () => {
             setLoading(true);
             const response = await axios.get(`http://localhost:3000/photos?albumId=${id}`);
-            console.log(response.data)
-            setPhotos(prevPhotos => [...prevPhotos, ...response.data]);
+            console.log(response.data);
+            setPhotos(response.data);
             setLoading(false);
         };
         fetchPhotos();
-    }, [id]); // Fetch photos when id changes
+    }, [id]);
 
-    // Function to handle editing a photo
-    const handleEditPhoto = async (photoId) => {
+    const handleEditClick = (photo) => {
+        setEditingPhotoId(photo.id);
+        setEditedTitle(photo.title);
+        setEditedUrl(photo.thumbnailUrl);
+    };
+
+    const handleSaveClick = async (photoId) => {
         try {
-            // Make API call to update photo title
-            await axios.patch(`http://localhost:3000/photos/${photoId}`, { title: photos.find(photo => photo.id === photoId).title });
-            setEditingPhotoId(null); // Exit editing mode
+            const updatedPhoto = { title: editedTitle, thumbnailUrl: editedUrl };
+            await axios.patch(`http://localhost:3000/photos/${photoId}`, updatedPhoto);
+
+            setPhotos((prevPhotos) =>
+                prevPhotos.map((photo) =>
+                    photo.id === photoId ? { ...photo, ...updatedPhoto } : photo
+                )
+            );
+
+            setEditingPhotoId(null);
         } catch (error) {
-            console.error('Error editing photo:', error);
+            console.error('Error updating photo:', error);
         }
     };
 
-    // Function to handle removing a photo
-    const handleRemovePhoto = async (photoId) => {
+    const handleDeleteClick = async (photoId) => {
         try {
-            // Make API call to delete photo
             await axios.delete(`http://localhost:3000/photos/${photoId}`);
-            setPhotos(prevPhotos => prevPhotos.filter(photo => photo.id !== photoId));
+            setPhotos((prevPhotos) => prevPhotos.filter((photo) => photo.id !== photoId));
         } catch (error) {
             console.error('Error deleting photo:', error);
         }
     };
 
-    // // Infinite scroll logic to load more photos
-    // const handleScroll = () => {
-    //     if (
-    //         window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight
-    //     ) {
-    //         // Reached bottom of page, load more photos
-    //         pageRef.current++;
-    //         //fetchPhotos();
-    //     }
-    // };
+    const handleAddPhoto = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/photos`);
+            const existingPhotos = response.data;
+            const largestPhotosId = existingPhotos.reduce((maxId, photo) => {
+              return parseInt(photo.id) > maxId ? parseInt(photo.id) : maxId;
+            }, 0);
 
-    // useEffect(() => {
-    //     window.addEventListener('scroll', handleScroll);
-    //     return () => window.removeEventListener('scroll', handleScroll);
-    // }, []); // Add scroll event listener on component mount
+            const newPhoto = {
+                albumId: id,
+                id: String(largestPhotosId + 1),
+                title: newPhotoTitle.current.value,
+                url: newPhotoUrl.current.value,
+                thumbnailUrl: newPhotoThumbnail.current.value,
+            };
 
-    // Render function for photo items
-    const renderPhotoItem = (photo, index) => {
-        if (editingPhotoId === photo.id) {
-            // Render edit mode
-            return (
-                <li key={index}>
-                    <input
-                        type="text"
-                        value={photos.find(p => p.id === photo.id).title}
-                        onChange={(e) => setNewPhotoTitle(e.target.value)}
-                    />
-                    <button onClick={() => handleEditPhoto(photo.id)}>Save</button>
-                    <button onClick={() => setEditingPhotoId(null)}>Cancel</button>
-                </li>
-            );
-        } else {
-            // Render view mode
-            return (
-                <li key={index}>
-                    <p>{photo.title}</p>
-                    <img src={photo.thumbnailUrl} alt={photo.title} />
-                    <button onClick={() => setEditingPhotoId(photo.id)}>Edit</button>
-                    <button onClick={() => handleRemovePhoto(photo.id)}>Delete</button>
-                </li>
-            );
+            const addedPhoto = await axios.post('http://localhost:3000/photos', newPhoto);
+            setPhotos((prevPhotos) => [...prevPhotos, addedPhoto.data]);
+            setAddingPhoto(false);
+        } catch (error) {
+            console.error('Error adding photo:', error);
         }
-    };
+    }
 
     return (
         <div>
             <h2>Album Details</h2>
+            {!addingPhoto &&
+                <button onClick={() => setAddingPhoto(true)}>Add New Photo</button>}
+            {addingPhoto &&
+                <div>
+                    <h3>Add New Photo</h3>
+                    <input
+                        type="text"
+                        placeholder="Photo Title"
+                        ref={newPhotoTitle}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Photo URL"
+                        ref={newPhotoUrl}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Photo Thumbnail"
+                        ref={newPhotoThumbnail}
+                    />
+                    <button onClick={() => handleAddPhoto()}>Add Photo</button>
+                    <button onClick={() => setAddingPhoto(false)}>Cancel</button>
+                </div>
+            }
             <ul>
-                {photos.map((photo, index) => renderPhotoItem(photo, index))}
+                {photos.map((photo, index) => (
+                    <li key={index}>
+                        {editingPhotoId === photo.id ? (
+                            <div>
+                                <input
+                                    type="text"
+                                    value={editedTitle}
+                                    onChange={(e) => setEditedTitle(e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    value={editedUrl}
+                                    onChange={(e) => setEditedUrl(e.target.value)}
+                                />
+                                <button onClick={() => handleSaveClick(photo.id)}>Save</button>
+                                <button onClick={() => setEditingPhotoId(null)}>Cancel</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <img src={photo.thumbnailUrl} alt={photo.title} />
+                                <p>{photo.title}</p>
+                                <button onClick={() => handleEditClick(photo)}>Edit</button>
+                                <button onClick={() => handleDeleteClick(photo.id)}>Delete</button>
+                            </div>
+                        )}
+                    </li>
+                ))}
             </ul>
             {loading && <p>Loading more photos...</p>}
         </div>
@@ -101,3 +147,51 @@ function SingleAlbum() {
 }
 
 export default SingleAlbum;
+
+
+// import {React, useState, useRef, useEffect} from 'react'
+// import { useParams } from 'react-router-dom';
+// import axios from 'axios';
+
+// function SingleAlbum() {
+//     const { id } = useParams();
+
+//     const [photos, setPhotos] = useState([]);
+//     const [loading, setLoading] = useState(false);
+
+//     const pageRef = useRef(1); // Track current page for pagination
+
+//     useEffect(() => {
+//         const fetchPhotos = async () => {
+//             setLoading(true);
+//             const response = await axios.get(`http://localhost:3000/photos?albumId=${id}`);
+//             console.log(response.data);
+//             setPhotos(prevPhotos => [...prevPhotos, ...response.data]);
+//             setLoading(false);
+//         };
+//         fetchPhotos();
+//     }, [id]);
+
+//     // Function to handle adding a new photo (similar logic to adding a new album)
+//     // Function to handle editing a photo
+//     // Function to handle removing a photo
+//     // Infinite scroll logic
+
+//     return (
+//         <div>
+//             <h2>Album Details</h2>
+//             <ul>
+//                 {photos.map((photo, index)=> (
+//                     <li key={index}>
+//                         <img src={photo.thumbnailUrl} alt={photo.title} />
+//                         <p>{photo.title}</p>
+//                     </li>
+//                 ))}
+//             </ul>
+//             {loading && <p>Loading more photos...</p>}
+//         </div>
+//     );
+// }
+
+// export default SingleAlbum
+
