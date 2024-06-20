@@ -46,7 +46,6 @@ const Info = () => {
   return (
     <div>
       <h2>User Information</h2>
-      <p><strong>Name:</strong> {user.name}</p>
       <p><strong>Username:</strong> {user.username}</p>
       <p><strong>Email:</strong> {user.email}</p>
       <p><strong>Address:</strong> {user.address.street}, {user.address.suite}, {user.address.city}, {user.address.zipcode}</p>
