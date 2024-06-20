@@ -8,8 +8,8 @@ const ListPosts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const user = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.get(`http://localhost:3000/posts?userId=${user.id}`);
+      const user = localStorage.getItem('user');
+      const response = await axios.get(`http://localhost:3000/posts?userId=${user}`);
       setPosts(response.data);
     };
     fetchPosts();

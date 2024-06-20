@@ -26,7 +26,7 @@ const SinglePost = () => {
   const handleAddComment = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const response = await axios.post(`http://localhost:3000/posts/${id}/comments`, {
-      userId: user.id,
+      userId: user,
       body: newComment
     });
     setComments([...comments, response.data]);
