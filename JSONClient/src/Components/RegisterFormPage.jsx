@@ -1,10 +1,9 @@
-// FormPage.js
 import React, { useRef } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import classes from '../modules_css/Login.module.css'
 
-const RegisterFormPage = ({onRegister}) => {
-    // const navigate = useNavigate();
+const RegisterFormPage = ({ onRegister }) => {
     const location = useLocation();
     const { username, password } = location.state || {};
 
@@ -26,7 +25,7 @@ const RegisterFormPage = ({onRegister}) => {
         const response = await axios.get(`http://localhost:3000/users`);
         const existingUsers = response.data;
         const largestUser = existingUsers.reduce((maxId, user) => {
-          return parseInt(user.id) > maxId ? parseInt(user.id) : maxId;
+            return parseInt(user.id) > maxId ? parseInt(user.id) : maxId;
         }, 0);
 
         const formData = {
@@ -62,71 +61,89 @@ const RegisterFormPage = ({onRegister}) => {
     };
 
     return (
-        <div>
-            {(username === undefined || password === undefined) ? <Navigate to="/register"/> :
+        <div className={classes.loginCard}>
+            {(username === undefined || password === undefined) ? <Navigate to="/register" /> :
+
                 <div>
-                    <h2>{username}, Fill Out the Form:</h2>
+                    <h2 className={classes.headline}>{username}, please fill out the form:</h2>
 
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label>Name:</label>
-                            <input type="text" ref={nameRef} required />
-                        </div>
+                    <form className={classes.form} onSubmit={handleSubmit}>
 
                         <div>
-                            <label>Email:</label>
-                            <input type="email" ref={emailRef} required />
+                            <p>Personal information:</p>
                         </div>
 
-                        <div>
-                            <label>Phone:</label>
-                            <input type="text" ref={phoneRef} required />
-                        </div>
+                        <input
+                            type="text"
+                            ref={nameRef}
+                            placeholder="name"
+                            required />
+
+                        <input
+                            type="email"
+                            placeholder="email"
+                            ref={emailRef}
+                            required />
+
+                        <input
+                            type="text"
+                            placeholder="phone"
+                            ref={phoneRef}
+                            required />
 
                         <div>
-                            <label>Street:</label>
-                            <input type="text" ref={streetRef} />
+                            <p>Address:</p>
                         </div>
 
-                        <div>
-                            <label>Suite:</label>
-                            <input type="text" ref={suiteRef} />
-                        </div>
+                        <input
+                            type="text"
+                            placeholder="street"
+                            ref={streetRef}
+                        />
+
+                        <input
+                            type="text"
+                            placeholder="suite"
+                            ref={suiteRef} />
+
+                        <input
+                            type="text"
+                            placeholder="city"
+                            ref={cityRef} />
+
+                        <input
+                            type="text"
+                            placeholder="zipcode"
+                            ref={zipcodeRef} />
+
+                        <input
+                            type="text"
+                            placeholder="geo lattitude"
+                            ref={latRef} />
+
+                        <input
+                            type="text"
+                            placeholder="geo longitude"
+                            ref={lngRef} />
 
                         <div>
-                            <label>City:</label>
-                            <input type="text" ref={cityRef} />
+                            <p>Company:</p>
                         </div>
 
-                        <div>
-                            <label>Zipcode:</label>
-                            <input type="text" ref={zipcodeRef} />
-                        </div>
+                        <input
+                            type="text"
+                            placeholder="company name"
+                            ref={companyNameRef} />
 
-                        <div>
-                            <label>Geo Lat:</label>
-                            <input type="text" ref={latRef} />
-                        </div>
+                        <input
+                            type="text"
+                            placeholder="catch phrase"
+                            ref={catchPhraseRef} />
 
-                        <div>
-                            <label>Geo Lng:</label>
-                            <input type="text" ref={lngRef} />
-                        </div>
-
-                        <div>
-                            <label>Company Name:</label>
-                            <input type="text" ref={companyNameRef} />
-                        </div>
-
-                        <div>
-                            <label>CatchPhrase:</label>
-                            <input type="text" ref={catchPhraseRef} />
-                        </div>
-
-                        <div>
-                            <label>BS:</label>
-                            <input type="text" ref={bsRef} />
-                        </div>
+                        <input
+                            type="text"
+                            placeholder="BS"
+                            ref={bsRef} />
 
                         <button type="submit">Submit</button>
                     </form>

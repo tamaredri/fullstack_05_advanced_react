@@ -1,0 +1,43 @@
+.loginCard{
+    width: 50%;
+    background-color: #D7DCDB;
+    margin: 10% auto; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.headline{
+    width: 100%;
+    text-align: center;
+    color: #3A1912;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.form input{
+    padding: 10px;
+    width: 70%;
+    margin: 5px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: #CDCDC8;
+}
+
+.form div{
+    width: 70%;
+    display: flex;
+}
+
+.form button{
+    width: 50%;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}

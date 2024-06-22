@@ -1,13 +1,17 @@
 // RegisterPage.js
 import React, { useRef, useState } from 'react';
-import { Link, useNavigate, Routes, Route } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import classes from '../modules_css/Login.module.css'
+
 
 const RegisterPage = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const verifyPasswordRef = useRef();
+  
   const [error, setError] = useState('');
+  
   const navigate = useNavigate();
 
   const handleRegister = async () => {
@@ -36,24 +40,28 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h2>Register Page</h2>
+    <div className={classes.loginCard}>
+      <h2 className={classes.headline}>Register Page</h2>
 
-      <form onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
-        <div>
-          <label>Username:</label>
-          <input type="text" ref={usernameRef} required />
-        </div>
+      <form className={classes.form} onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
 
-        <div>
-          <label>Password:</label>
-          <input type="password" ref={passwordRef} required />
-        </div>
+        <input
+          type="text"
+          ref={usernameRef}
+          placeholder="Username"
+          required />
 
-        <div>
-          <label>Verify Password:</label>
-          <input type="password" ref={verifyPasswordRef} required />
-        </div>
+        <input
+          type="password"
+          ref={passwordRef}
+          placeholder="Password"
+          required />
+
+        <input
+          type="password"
+          ref={verifyPasswordRef}
+          placeholder="Verify Password"
+          required />
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
