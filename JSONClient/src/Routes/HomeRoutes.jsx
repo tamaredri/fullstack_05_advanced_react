@@ -33,4 +33,4 @@ const DefaultPage = () => {
     );
 };
 
-export default HomeRoutes
+export default HomeRoutes;
