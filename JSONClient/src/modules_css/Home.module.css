@@ -1,0 +1,58 @@
+.home{
+    background-color: #D7DCDB;
+    height: 100%;
+}
+
+.header {
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.headerTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.header h2 {
+    margin: 0;
+    color: #3A1912;
+}
+
+.header button {
+    background-color: #CDCDC8;
+    color: #3A1912;
+    padding: 10px 20px;
+    border-radius: 30px;
+}
+
+nav {
+    width: 100%;
+}
+
+.navList {
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navList li {
+    margin-right: 30px;
+}
+
+.navList a {
+    text-decoration: none;
+    color: #8A5C45;
+    padding: 5px 10px;
+    margin: 0 10px;
+    width: 100%;
+}
+
+.navList a:hover {
+    text-shadow: 0 4px 8px rgba(58, 25, 18, 0.5);
+}

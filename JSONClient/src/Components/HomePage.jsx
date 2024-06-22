@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 
+import classes from '../modules_css/Home.module.css'
 
 const HomePage = ({ onLogout }) => {
   const [user, setUser] = useState(null);
@@ -18,26 +19,27 @@ const HomePage = ({ onLogout }) => {
     }
   }, []);
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+  // if (!user) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
-    <div>
-      <header>
-        <h1>Welcome, {user.name}</h1>
+    <header className={classes.header}>
+      <div className={classes.headerTop}>
+        <h2>Welcome, {user.name}</h2>
         <button onClick={onLogout}>Logout</button>
-        <nav>
-          <ul>
-            <li><Link to="/homePage/">Home</Link></li>
-            <li><Link to="/homePage/posts">Posts</Link></li>
-            <li><Link to="/homePage/albums">Albums</Link></li>
-            <li><Link to="/homePage/todos">Todos</Link></li>
-            <li><Link to="/homePage/info">Info</Link></li>
-          </ul>
-        </nav>
-      </header>
-    </div>
+      </div>
+
+      <nav>
+        <ul className={classes.navList}>
+          <li><Link to="/homePage/">Home</Link></li>
+          <li><Link to="/homePage/posts">Posts</Link></li>
+          <li><Link to="/homePage/albums">Albums</Link></li>
+          <li><Link to="/homePage/todos">Todos</Link></li>
+          <li><Link to="/homePage/info">Info</Link></li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 

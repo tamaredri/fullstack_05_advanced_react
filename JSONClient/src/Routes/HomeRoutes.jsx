@@ -8,28 +8,34 @@ import AlbumsRoutes from './AlbumsRoutes';
 import PostsRoutes from './PostsRoutes';
 import TodosRoutes from './TodosRoutes';
 
-function HomeRoutes({onLogout}) {
+import classes from '../modules_css/Home.module.css'
+
+function HomeRoutes({ onLogout }) {
     return (
-        <main>
-            <HomePage onLogout={onLogout}/>
-            <Routes>
-                <Route path="/posts/*" element={<PostsRoutes />} />
-                <Route path="/albums/*" element={<AlbumsRoutes />} />
-                <Route path="/todos/*" element={<TodosRoutes />} />
-                <Route path="/info" element={<Info />} />
-                <Route index element={<DefaultPage />} />
-            </Routes>
-        </main>
+        <div className={classes.home}>
+            <HomePage onLogout={onLogout} />
+
+            <main>
+                <Routes>
+                    <Route path="/posts/*" element={<PostsRoutes />} />
+                    <Route path="/albums/*" element={<AlbumsRoutes />} />
+                    <Route path="/todos/*" element={<TodosRoutes />} />
+                    <Route path="/info" element={<Info />} />
+                    <Route index element={<DefaultPage />} />
+                </Routes>
+            </main>
+
+        </div>
     )
 }
 
-  
+
 const DefaultPage = () => {
     return (
-      <div>
-        <h2>Welcome to the Application</h2>
-        <p>Choose an option from the navigation above.</p>
-      </div>
+        <>
+            <h2>Welcome to the Application</h2>
+            <p>Choose an option from the navigation above.</p>
+        </>
     );
 };
 
