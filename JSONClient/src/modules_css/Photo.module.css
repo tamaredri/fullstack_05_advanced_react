@@ -23,7 +23,7 @@
 */
 .gridContainer {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px; /* Adjust the gap between grid items as needed */
     padding: 0;
     list-style: none;

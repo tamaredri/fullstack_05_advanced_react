@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 
+import classes from '../../modules_css/Todos.module.css'
+
 const SingleTodo = ({ todo, isEditable, setEditTodoId, setChangeComplete }) => {
     const editedText = useRef('');
 
@@ -41,13 +43,15 @@ const SingleTodo = ({ todo, isEditable, setEditTodoId, setChangeComplete }) => {
 
     return (
         <li>
-            <span>{todo.id}. </span>
+            <button className={classes.editButton} onClick={() => handleDeleteTodo(todo.id)}>🗑️</button>
 
             <input
                 type="checkbox"
                 checked={todo.completed}
                 onChange={() => handleToggle(todo.id)}
             />
+
+            <span>{todo.id}. </span>
 
             {isEditable ? (
                 <>
@@ -62,8 +66,7 @@ const SingleTodo = ({ todo, isEditable, setEditTodoId, setChangeComplete }) => {
             ) : (
                 <>
                     <span>{todo.title}</span>
-                    <button onClick={() => setEditTodoId(todo.id)}>Edit</button>
-                    <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
+                    <button className={classes.editButton} onClick={() => setEditTodoId(todo.id)}>✏️</button>
                 </>
             )}
 

@@ -4,6 +4,7 @@ import AddTodo from './AddTodo';
 import FilterTodos from './FilterTodos';
 import SingleTodo from './SingleTodo';
 
+import classes from '../../modules_css/Todos.module.css'
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
@@ -55,7 +56,7 @@ const Todos = () => {
 
       <AddTodo isAddingTodo={isAddingTodo} setAddingTodo={setAddingTodo} />
 
-      <div></div>
+      <div className={classes.divider}></div>
 
       <FilterTodos
         setSortMethod={setSortCriterion}
@@ -63,9 +64,9 @@ const Todos = () => {
         setSearchQuery={setSearchQuery}
         setCompleteFilter={setExecutionFilter} />
 
-      <div></div>
+      <div className={classes.divider}></div>
 
-      <ul>
+      <ul className={classes.todoList}>
         {todos.map((todo, index) => (
           <SingleTodo
             key={index}

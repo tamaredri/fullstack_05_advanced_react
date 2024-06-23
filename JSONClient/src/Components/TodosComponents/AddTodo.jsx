@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 
+import classes from '../../modules_css/Todos.module.css'
+
 const AddTodo = ({ isAddingTodo, setAddingTodo }) => {
 
     const newTodo = useRef('');
@@ -31,7 +33,7 @@ const AddTodo = ({ isAddingTodo, setAddingTodo }) => {
 
 
     return (
-        <div>
+        <div className={classes.add}>
             {!isAddingTodo ? (
                 <button onClick={() => setAddingTodo(true)}>Add New Todo</button>
             ) : (
