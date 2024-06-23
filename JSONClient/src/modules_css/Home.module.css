@@ -26,7 +26,7 @@
     background-color: #CDCDC8;
     color: #3A1912;
     padding: 10px 20px;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 nav {
@@ -55,4 +55,28 @@ nav {
 
 .navList a:hover {
     text-shadow: 0 4px 8px rgba(58, 25, 18, 0.5);
+}
+
+.flex{
+        display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.displayCard{
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #AF805C;
+    color: #D7DCDB;
+}
+
+
+.infoTitle{
+    color: #3A1912;
 }

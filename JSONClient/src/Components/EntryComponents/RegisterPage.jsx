@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import classes from '../modules_css/Login.module.css'
+import classes from '../../modules_css/Login.module.css'
 
 
 const RegisterPage = () => {

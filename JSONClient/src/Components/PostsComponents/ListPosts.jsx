@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import axios from 'axios';
 
+import classes from '../../modules_css/Home.module.css'
+
 const ListPosts = () => {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState('');

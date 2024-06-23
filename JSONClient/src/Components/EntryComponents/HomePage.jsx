@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 
-import classes from '../modules_css/Home.module.css'
+import classes from '../../modules_css/Home.module.css'
 
 const HomePage = ({ onLogout }) => {
   const [user, setUser] = useState(null);
@@ -19,9 +19,9 @@ const HomePage = ({ onLogout }) => {
     }
   }, []);
 
-  // if (!user) {
-  //   return <div>Loading...</div>;
-  // }
+   if (!user) {
+     return <div>Loading...</div>;
+   }
 
   return (
     <header className={classes.header}>

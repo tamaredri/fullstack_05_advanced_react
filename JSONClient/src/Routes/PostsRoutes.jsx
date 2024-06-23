@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ListPosts from '../Components/ListPosts';
-import NewPost from '../Components/NewPost';
-import SinglePost from '../Components/SinglePost';
+import ListPosts from '../Components/PostsComponents/ListPosts';
+import NewPost from '../Components/PostsComponents/NewPost';
+import SinglePost from '../Components/PostsComponents/SinglePost';
 
 const PostsRoutes = () => {
     return (

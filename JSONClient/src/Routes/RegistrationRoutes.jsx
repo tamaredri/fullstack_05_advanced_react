@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import RegisterPage from '../Components/RegisterPage'
-import RegisterFormPage from '../Components/RegisterFormPage'
+import RegisterPage from '../Components/EntryComponents/RegisterPage'
+import RegisterFormPage from '../Components/EntryComponents/RegisterFormPage'
 
 function Registration({ onRegister }) {
     return (

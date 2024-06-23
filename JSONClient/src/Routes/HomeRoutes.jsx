@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 
 import Info from '../Components/Info';
-import HomePage from '../Components/HomePage';
+import HomePage from '../Components/EntryComponents/HomePage';
 
 import AlbumsRoutes from './AlbumsRoutes';
 import PostsRoutes from './PostsRoutes';
@@ -32,10 +32,10 @@ function HomeRoutes({ onLogout }) {
 
 const DefaultPage = () => {
     return (
-        <>
+        <div className={`${classes.displayCard} ${classes.flex}`}>
             <h2>Welcome to the Application</h2>
             <p>Choose an option from the navigation above.</p>
-        </>
+        </div>
     );
 };
 

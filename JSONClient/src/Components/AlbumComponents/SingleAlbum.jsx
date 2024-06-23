@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import classes from '../../modules_css/Home.module.css'
+
 function SingleAlbum() {
     const { id } = useParams();
 
@@ -88,7 +90,7 @@ function SingleAlbum() {
     }
 
     return (
-        <div>
+        <div className={classes.displayCard}>
             <h2>Album Details</h2>
             {!addingPhoto &&
                 <button onClick={() => setAddingPhoto(true)}>Add New Photo</button>}

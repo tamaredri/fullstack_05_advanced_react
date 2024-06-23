@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import classes from '../modules_css/Login.module.css'
+import classes from '../../modules_css/Login.module.css'
 
 const RegisterFormPage = ({ onRegister }) => {
     const location = useLocation();
