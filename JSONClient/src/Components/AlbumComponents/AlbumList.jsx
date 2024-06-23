@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import classes from '../../modules_css/Albums.module.css'
+
 const SingleAlbum = ({ albums, onDeleteAlbum }) => {
   const handleDeleteAlbum = async (albumId) => {
     try {
@@ -21,13 +23,14 @@ const SingleAlbum = ({ albums, onDeleteAlbum }) => {
 
   return (
     <div>
-      <ul>
+      <ul className={classes.albumList}>
         {albums.map((album, index) => (
           <li key={index}>
-            <Link to={`/homePage/albums/${album.id}`}>
+            <button onClick={() => handleDeleteAlbum(album.id)}>🗑️</button>
+           
+            <Link className={classes.link} to={`/homePage/albums/${album.id}`}>
               {album.id}, {album.title}
             </Link>
-            <button onClick={() => handleDeleteAlbum(album.id)}>🗑️</button>
           </li>
         ))}
       </ul>

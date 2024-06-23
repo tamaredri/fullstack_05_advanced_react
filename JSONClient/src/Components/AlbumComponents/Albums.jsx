@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
-import classes from '../../modules_css/Home.module.css';
 import AddAlbum from './AddAlbum.jsx';
 import FilterAlbums from './FilterAlbums.jsx';
-import SingleAlbum from './SingleAlbum.jsx';
+import SingleAlbum from './AlbumList.jsx';
+
+import classes from '../../modules_css/Albums.module.css'
 
 const Albums = () => {
   const [albums, setAlbums] = useState([]);
@@ -20,7 +20,7 @@ const Albums = () => {
       if (filteringMethod && searchQuery) {
         filterQuery = `&${filteringMethod}_like=${searchQuery}`;
       }
-      
+
       const user = localStorage.getItem('user');
       const response = await axios.get(`http://localhost:3000/albums?userId=${user}${filterQuery}`);
       setAlbums(response.data);
@@ -39,7 +39,7 @@ const Albums = () => {
   };
 
   return (
-    <div className={classes.displayCard}>
+    <div >
       <h2>Albums</h2>
 
       <FilterAlbums
@@ -47,10 +47,15 @@ const Albums = () => {
         setSearchQuery={setSearchQuery}
       />
 
+      <div className={classes.divider}></div>
+
       <AddAlbum
         setAddingAlbum={setAddingAlbum}
         isAddingAlbum={addingAlbum}
       />
+
+      <div className={classes.divider}></div>
+
 
       <SingleAlbum
         albums={albums}

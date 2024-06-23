@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 
+import classes from '../../modules_css/Photo.module.css'
+
+
 const SinglePhotos = ({
   photo,
   isEditable,
@@ -41,9 +44,9 @@ const SinglePhotos = ({
 
 
   return (
-    <li>
+    <li className={classes.gridItem}>
       {isEditable ? (
-        <div>
+        <div className={classes.editContainer}>
           <input
             type="text"
             ref={editedTitle}
@@ -63,8 +66,10 @@ const SinglePhotos = ({
 
           <p>{photo.title}</p>
 
+        <div className={classes.buttonHolder}>
           <button onClick={() => setEditingPhotoId(photo.id)}>Edit</button>
           <button onClick={() => handleDeleteClick(photo.id)}>Delete</button>
+        </div>
         </div>
       )}
     </li>

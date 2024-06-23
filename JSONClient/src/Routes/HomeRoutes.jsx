@@ -15,7 +15,7 @@ function HomeRoutes({ onLogout }) {
         <div className={classes.home}>
             <HomePage onLogout={onLogout} />
 
-            <main>
+            <main className={classes.displayCard}>
                 <Routes>
                     <Route path="/posts/*" element={<PostsRoutes />} />
                     <Route path="/albums/*" element={<AlbumsRoutes />} />
@@ -32,7 +32,7 @@ function HomeRoutes({ onLogout }) {
 
 const DefaultPage = () => {
     return (
-        <div className={`${classes.displayCard} ${classes.flex}`}>
+        <div className={classes.flex}>
             <h2>Welcome to the Application</h2>
             <p>Choose an option from the navigation above.</p>
         </div>

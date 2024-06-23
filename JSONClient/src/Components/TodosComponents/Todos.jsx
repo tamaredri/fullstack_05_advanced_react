@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import classes from '../../modules_css/Home.module.css'
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
@@ -126,7 +125,7 @@ const Todos = () => {
   });
 
   return (
-    <div className={classes.displayCard}>
+    <div>
       <h2>Todos</h2>
       <input
         type="text"

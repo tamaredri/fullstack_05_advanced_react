@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 
+import classes from '../../modules_css/Albums.module.css'
+
 const AddAlbum = ({ isAddingAlbum, setAddingAlbum }) => {
     const newAlbumName = useRef('');
 
@@ -30,13 +32,13 @@ const AddAlbum = ({ isAddingAlbum, setAddingAlbum }) => {
     };
 
     return (
-        <div>
+        <div className={classes.flex}>
             {!isAddingAlbum ? (
                 <button onClick={() => setAddingAlbum(true)}>Add New Album</button>
             ) : (
-                <div>
-                    <input type="text" ref={newAlbumName} />
-                    <button onClick={handleAddAlbum}>Create Album</button>
+                <div className={classes.add}>
+                    <input type="text" placeholder='title' ref={newAlbumName} />
+                    <button onClick={handleAddAlbum}>Done</button>
                     <button onClick={() => setAddingAlbum(false)}>Cancel</button>
                 </div>
             )}

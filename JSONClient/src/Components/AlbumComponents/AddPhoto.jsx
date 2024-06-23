@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 
+import classes from '../../modules_css/Photo.module.css'
+
 const AddPhoto = ({addingPhoto, isAddingPhoto, albumId}) => {
     const newPhotoTitle = useRef('');
     const newPhotoUrl = useRef('');
@@ -35,7 +37,7 @@ const AddPhoto = ({addingPhoto, isAddingPhoto, albumId}) => {
             {!addingPhoto &&
                 <button onClick={() => isAddingPhoto(true)}>Add New Photo</button>}
             {addingPhoto &&
-                <div>
+                <div className={classes.add}>
                     <h3>Add New Photo</h3>
                     <input
                         type="text"

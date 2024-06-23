@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import classes from '../../modules_css/Home.module.css'
 import AddPhoto from './AddPhoto';
 import SinglePhotos from './SinglePhoto';
+import classes from '../../modules_css/Photo.module.css'
+
 
 function PhotosList() {
     const { id } = useParams();
@@ -21,7 +22,7 @@ function PhotosList() {
             setLoading(true);
             let allPhotos = [];
             for (let i = 1; i <= pageLimit; i++) {
-                const response = await axios.get(`http://localhost:3000/photos?albumId=${id}&_page=${i}&_limit=3`);
+                const response = await axios.get(`http://localhost:3000/photos?albumId=${id}&_page=${i}&_limit=5`);
                 allPhotos = [...allPhotos, ...response.data];
             }
             setPhotos(allPhotos);
@@ -36,7 +37,7 @@ function PhotosList() {
     }
 
     return (
-        <div className={classes.displayCard}>
+        <div>
             <h2>Album Details</h2>
 
             <AddPhoto
@@ -44,7 +45,7 @@ function PhotosList() {
                 isAddingPhoto={setAddingPhoto}
                 albumId={id} />
 
-            <ul>
+            <ul className={classes.gridContainer}>
                 {photos.map((photo, index) => (
                     <SinglePhotos key={index}
                         photo={photo}
