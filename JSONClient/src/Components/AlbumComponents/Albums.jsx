@@ -42,16 +42,16 @@ const Albums = () => {
     <div >
       <h2>Albums</h2>
 
-      <FilterAlbums
-        setFilterringMethod={setFilterringMethod}
-        setSearchQuery={setSearchQuery}
+      <AddAlbum
+        setAddingAlbum={setAddingAlbum}
+        isAddingAlbum={addingAlbum}
       />
 
       <div className={classes.divider}></div>
 
-      <AddAlbum
-        setAddingAlbum={setAddingAlbum}
-        isAddingAlbum={addingAlbum}
+      <FilterAlbums
+        setFilterringMethod={setFilterringMethod}
+        setSearchQuery={setSearchQuery}
       />
 
       <div className={classes.divider}></div>
