@@ -23,7 +23,6 @@ const Todos = () => {
       const userId = localStorage.getItem('user');
       let query = `userId=${userId}`;
 
-      console.log(sortCriterion, searchCriterion, searchQuery, executionFilter);
 
       if (executionFilter) {
         query += `&completed=${executionFilter}`;
@@ -34,10 +33,8 @@ const Todos = () => {
       if (searchCriterion && searchQuery) {
         query += `&${searchCriterion}_like=${searchQuery}`;
       }
-      console.log(query);
 
       const response = await axios.get(`http://localhost:3000/todos?${query}`);
-      console.log(response.data)
       setTodos(response.data);
     };
     fetchTodos();

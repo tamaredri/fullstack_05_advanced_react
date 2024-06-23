@@ -46,7 +46,7 @@ const Info = () => {
   }
 
   return (
-    <div className={classes.displayCard}>
+    <div>
       <h2>User Information</h2>
       <p><strong className={classes.infoTitle}>Username:</strong> {user.username}</p>
       <p><strong className={classes.infoTitle}>Email:</strong> {user.email}</p>

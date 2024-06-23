@@ -12,7 +12,6 @@ const SingleTodo = ({ todo, isEditable, setEditTodoId, setChangeComplete }) => {
             await axios.patch(`http://localhost:3000/todos/${id}`, {
                 completed: !todo.completed
             });
-            console.log('toggled')
             setChangeComplete(true);
         } catch (error) {
             console.error('Error toggling todo completion:', error);
