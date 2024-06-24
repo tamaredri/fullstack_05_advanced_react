@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
 
 import classes from '../../modules_css/Photo.module.css'
 
@@ -13,6 +12,7 @@ const SinglePhotos = ({
 
   const editedTitle = useRef('');
   const editedUrl = useRef('');
+  const [error, setError] = useState('');
 
   const handleSaveClick = async (photoId) => {
     try {
@@ -24,24 +24,40 @@ const SinglePhotos = ({
       if ( editedTitle.current.value != '' ){
         updatedPhoto.title = editedTitle.current.value;
       }
-
-      await axios.patch(`http://localhost:3000/photos/${photoId}`, 
-        updatedPhoto);
+      const response = await fetch(`http://localhost:3000/photos/${photoId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedPhoto),
+      });
+      if (!response.ok) {
+        setError(`HTTP error! Status: ${response.status}`);
+      }
       setEditingPhotoId(null);
     } catch (error) {
-      console.error('Error updating photo:', error);
+      setError('Error updating photo:', error);
     }
   };
 
   const handleDeleteClick = async (photoId) => {
     try {
-      await axios.delete(`http://localhost:3000/photos/${photoId}`);
+      const response = await fetch(`http://localhost:3000/photos/${photoId}`, {
+        method: 'DELETE',
+      });
+    
+      if (!response.ok) {
+        setError(`HTTP error! Status: ${response.status}`);
+      }
       setEditingPhotoId(photoId);
     } catch (error) {
-      console.error('Error deleting photo:', error);
+      setError('Error deleting photo:', error);
     }
   };
 
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <li className={classes.gridItem}>

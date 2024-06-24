@@ -1,35 +1,46 @@
-import React, { useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
+
 
 import classes from '../../modules_css/Albums.module.css'
 
 const AddAlbum = ({ isAddingAlbum, setAddingAlbum }) => {
     const newAlbumName = useRef('');
+    const [error, setError] = useState('');
 
     const handleAddAlbum = async () => {
         try {
             const user = localStorage.getItem('user');
-
-            // get next running id number
-            const response = await axios.get(`http://localhost:3000/albums`);
-            const existingAlbums = response.data;
+            const response = await fetch(`http://localhost:3000/albums`);
+            if (!response.ok) {
+            setError('Network response was not ok');
+            }
+            const existingAlbums = await response.json();
             const largestAlbumId = existingAlbums.reduce((maxId, album) => {
                 return parseInt(album.id) > maxId ? parseInt(album.id) : maxId;
             }, 0);
 
-            await axios.post('http://localhost:3000/albums',
-                {
-                    userId: user,
-                    id: String(largestAlbumId + 1),
-                    title: newAlbumName.current.value
-                }
-            );
+            await fetch('http://localhost:3000/albums', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  userId: user,
+                  id: String(largestAlbumId + 1),
+                  title: newAlbumName.current.value
+                })
+              });
+              
 
             setAddingAlbum(false);
         } catch (error) {
             console.error('Error adding album:', error);
         }
     };
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <div className={classes.flex}>

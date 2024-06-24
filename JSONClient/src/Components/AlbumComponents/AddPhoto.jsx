@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
 
 import classes from '../../modules_css/Photo.module.css'
 
@@ -7,11 +6,15 @@ const AddPhoto = ({addingPhoto, isAddingPhoto, albumId}) => {
     const newPhotoTitle = useRef('');
     const newPhotoUrl = useRef('');
     const newPhotoThumbnail = useRef('');
+    const [error, setError] = useState('');
 
     const handleAddPhoto = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/photos`);
-            const existingPhotos = response.data;
+            const response = await fetch('http://localhost:3000/photos');
+            if (!response.ok) {
+                setError('Network response was not ok');
+            }
+            const existingPhotos = await response.json();
             const largestPhotosId = existingPhotos.reduce((maxId, photo) => {
               return parseInt(photo.id) > maxId ? parseInt(photo.id) : maxId;
             }, 0);
@@ -24,14 +27,24 @@ const AddPhoto = ({addingPhoto, isAddingPhoto, albumId}) => {
                 thumbnailUrl: newPhotoThumbnail.current.value,
             };
 
-            const addedPhoto = await axios.post('http://localhost:3000/photos', newPhoto);
+            await fetch('http://localhost:3000/photos', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newPhoto)
+              });
+              
             isAddingPhoto(false);
         } catch (error) {
-            console.error('Error adding photo:', error);
+            setError('Error adding photo:', error);
         }
     }
 
-
+    if (error) {
+        return <div>{error}</div>;
+    }
+    
     return (
         <div>
             {!addingPhoto &&

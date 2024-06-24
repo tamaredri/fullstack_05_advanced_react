@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import classes from '../../modules_css/Login.module.css'
 
 const LoginPage = ({ onLogin }) => {
@@ -14,8 +13,12 @@ const LoginPage = ({ onLogin }) => {
     const p = password.current.value;
 
     try {
-      const users = await axios.get(`http://localhost:3000/users`);
-      const user = users.data.find(user => user.username === u && user.website === p);
+      const response = await fetch('http://localhost:3000/users');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const users = await response.json();
+      const user = users.find(user => user.username === u && user.website === p);
       if (user) {
         onLogin(user.id);
       } else {

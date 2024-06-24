@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import classes from '../modules_css/Home.module.css'
 
@@ -14,9 +13,15 @@ const Info = () => {
 
       if (userId) {
         try {
-          const response = await axios.get(`http://localhost:3000/users?id=${userId}`);
-          if (response.data && response.data.length > 0) {
-            setUser(response.data[0]);
+          const response = await fetch(`http://localhost:3000/users?id=${userId}`);
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const userData = await response.json();
+          if (userData && userData.length > 0) {
+            setUser(userData[0]);
           } else {
             setError('User not found');
           }
