@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
+import classes from '../../modules_css/Posts.module.css';
+
+
 const PostBody = ({ post, isPostInEdit, setIsPostInEdit }) => {
     const editedTitle = useRef('');
     const editedBody = useRef('');
@@ -41,22 +44,25 @@ const PostBody = ({ post, isPostInEdit, setIsPostInEdit }) => {
     return (
         <div>
             {isPostInEdit ? (
-                <>
+                <div className={classes.postData}>
+                  <p>Title:</p>
                     <input
                         type="text"
                         ref={editedTitle}
                     />
+
+                    <p>Body:</p>
                     <textarea ref={editedBody} />
                     <button onClick={handleSavePost}>Save</button>
-                </>
+                </div>
             )
                 :
                 (
-                    <>
+                    <div className={classes.postContainer}>
                         <h2>{post.title}</h2>
                         <p>{post.body}</p>
                         <button onClick={() => setIsPostInEdit(true)}>Edit Post</button>
-                    </>
+                    </div>
                 )}
         </div>
     );

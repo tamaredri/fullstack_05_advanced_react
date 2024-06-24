@@ -11,17 +11,21 @@
 
 .modal {
   position: fixed;
-  top: 10%; /* Adjust the top position to start modal lower */
+  top: 12%; 
   left: 50%;
   transform: translateX(-50%);
   background: white;
-  padding: 1em;
+  
   z-index: 1001;
+
   border-radius: 10px;
-  max-width: 800px; /* Adjust maximum width to fit content */
-  width: 90%;
-  height: 80vh; /* Reduce maximum height to allow more space for content */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds modal size */
+  border: #CDCDC8;
+  max-width: 800px;
+
+  width: 80%;
+  height: 90%;
+  overflow-y: auto;
+
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   animation: slide-down 0.3s ease-out forwards;
 }

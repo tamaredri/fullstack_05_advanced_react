@@ -1,0 +1,93 @@
+.divider{
+  width: 100%;
+  height: 1px;
+  background-color: #3A1912;
+  margin: 10px auto;
+}
+
+/*
+  post input
+*/
+
+.postData{
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #D7DCDB;
+}
+
+.postData label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.postData input[type="text"],
+.postData textarea {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.postData textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+
+/*
+    posts list
+*/
+
+.postsList{
+  list-style: none;
+}
+
+.postsList button{
+  background-color: transparent;
+}
+
+.postsList button:hover{
+  text-shadow: 0 4px 8px rgba(58, 25, 18, 0.5);
+  border: transparent;
+}
+
+
+/*
+    post view
+*/
+
+.postContainer{
+  padding: 40px;
+  background-color: #CDCDC8;
+  border-radius: 10px;
+}
+
+
+/*
+  comments list
+*/
+
+.commentList{
+  list-style-type: none;
+  padding: 0;
+}
+
+.commentItem {
+  padding:  20px;
+  border-bottom: 2px solid #CDCDC8;
+}
+
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+  

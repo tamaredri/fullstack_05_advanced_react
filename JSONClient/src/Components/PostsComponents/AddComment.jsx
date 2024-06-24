@@ -1,5 +1,8 @@
 import React, { useRef } from 'react';
 
+import classes from '../../modules_css/Posts.module.css';
+
+
 const AddComment = ({ userEmail, setFinishAdding, postId }) => {
     const title = useRef('');
     const body = useRef('');
@@ -53,14 +56,13 @@ const AddComment = ({ userEmail, setFinishAdding, postId }) => {
     };
 
     return (
-        <div>
+        <div className={classes.postData}>
             <input
                 type="text"
                 ref={title}
                 placeholder="title"
             />
-            <input
-                type="text"
+            <textarea
                 ref={body}
                 placeholder="Comment Body"
             />

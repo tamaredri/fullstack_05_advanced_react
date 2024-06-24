@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import classes from '../../modules_css/Photo.module.css'
 
@@ -10,9 +10,16 @@ const SinglePhotos = ({
 
 }) => {
 
-  const editedTitle = useRef('');
-  const editedUrl = useRef('');
+  const editedTitle = useRef(photo.title);
+  const editedUrl = useRef(photo.thumbnailUrl);
   const [error, setError] = useState('');
+
+  useEffect(()=>{
+    if(isEditable){
+      editedTitle.current.value = photo.title;
+      editedUrl.current.value = photo.thumbnailUrl
+    }
+  })
 
   const handleSaveClick = async (photoId) => {
     try {

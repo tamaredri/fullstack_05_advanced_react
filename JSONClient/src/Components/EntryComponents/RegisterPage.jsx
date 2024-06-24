@@ -22,7 +22,7 @@ const RegisterPage = () => {
         setError(`HTTP error! Status: ${response.status}`);
       }
       const users = await response.json();
-      const user = users.data.find(user => user.username === username);
+      const user = users.find(user => user.username === username);
 
       if (user) {
         setError('User already exists');

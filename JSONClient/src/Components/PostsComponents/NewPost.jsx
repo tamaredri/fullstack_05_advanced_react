@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Modal from './Modal.jsx';
+
+import classes from '../../modules_css/Posts.module.css';
+
 
 const NewPost = ({ setIsAddingPost }) => {
   const title = useRef('');
@@ -16,7 +19,7 @@ const NewPost = ({ setIsAddingPost }) => {
 
       const response = await fetch(`http://localhost:3000/posts`);
       if (!response.ok) {
-          setError('Network response was not ok');
+        setError('Network response was not ok');
       }
       const data = await response.json();
       const ids = data.map(post => parseInt(post.id));
@@ -46,12 +49,12 @@ const NewPost = ({ setIsAddingPost }) => {
     const response = await fetch('http://localhost:3000/posts', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(newPost)
     });
     if (!response.ok) {
-        setError('Network response was not ok, can not add this post');
+      setError('Network response was not ok, can not add this post');
     }
     setIsAddingPost(true);
     navigate('/homePage/posts');
@@ -59,10 +62,11 @@ const NewPost = ({ setIsAddingPost }) => {
 
   return (
     <Modal>
-        <h2>New Post</h2>
+      <h2>New Post</h2>
 
-        <form 
-        onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }}>
+      <div className={classes.postData}>
+        <form
+          onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }}>
 
           <div>
             <label>Title:</label>
@@ -71,13 +75,15 @@ const NewPost = ({ setIsAddingPost }) => {
 
           <div>
             <label>Body:</label>
-            <textarea ref={body}/>
+            <textarea ref={body} />
           </div>
 
-          {error && <p>{error}</p>}
+          {error && <p className={classes.error}>{error}</p>}
 
           <button type="submit">Create Post</button>
         </form>
+      </div>
+
 
     </Modal>
   );

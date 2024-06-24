@@ -5,6 +5,9 @@ import EditCommentForm from './EditCommentForm.jsx';
 import PostBody from './PostBody.jsx';
 import AddComment from './AddComment.jsx';
 
+import classes from '../../modules_css/Posts.module.css';
+
+
 const FullPost = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -101,7 +104,7 @@ const FullPost = () => {
 
       <h3>Comments:</h3>
 
-      <ul>
+      <ul className={classes.commentList}>
         {comments.map((comment, index) => (
           <EditCommentForm
             key={index}

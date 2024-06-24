@@ -1,5 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 
+import classes from '../../modules_css/Posts.module.css';
+
+
 const EditCommentForm = ({ 
   comment, 
   isEditable, 
@@ -9,14 +12,14 @@ const EditCommentForm = ({
 }) => {
 
   const name = useRef(comment.name);
-  const email = useRef(comment.email);
+  //const email = useRef(comment.email);
   const body = useRef(comment.body);
 
 
   useEffect(() => {
     if (isInEdit) {
       name.current.value = comment.name;
-      email.current.value = comment.email;
+      //email.current.value = comment.email;
       body.current.value = comment.body;
     }
   }, [isInEdit]);
@@ -31,7 +34,7 @@ const EditCommentForm = ({
         },
         body: JSON.stringify({
           name: name.current.value,
-          email: email.current.value,
+          email: comment.email,
           body: body.current.value,
         })
       });
@@ -67,19 +70,13 @@ const EditCommentForm = ({
 
 
   return (
-    <li>
+    <li className={classes.commentItem}>
       {isInEdit ? (
-        <div>
+        <div className={classes.postData}>
           <label>Name:</label>
           <input
             type="text"
             ref={name}
-          />
-
-          <label>Email:</label>
-          <input
-            type="text"
-            ref={email}
           />
 
           <label>Body:</label>
@@ -92,9 +89,9 @@ const EditCommentForm = ({
         </div>
       ) : (
         <div>
-          <strong>{comment.name}</strong>
+          <h5>{comment.email} : </h5>
 
-          <p>({comment.email}) : </p>
+          <strong>{comment.name}</strong>
           <p>{comment.body}</p>
 
           {isEditable && 
