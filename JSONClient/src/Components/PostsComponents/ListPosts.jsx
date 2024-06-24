@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
-import axios from 'axios';
 
 const ListPosts = ({ posts, setPosts }) => {
   const [search, setSearch] = useState('');
@@ -11,8 +10,17 @@ const ListPosts = ({ posts, setPosts }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       const user = localStorage.getItem('user');
-      const response = await axios.get(`http://localhost:3000/posts?userId=${user}`);
-      setPosts(response.data);
+      try {
+        const response = await fetch(`http://localhost:3000/posts?userId=${user}`);
+        if (response.ok) {
+          const data = await response.json();
+          setPosts(data);
+        } else {
+          console.error('Failed to fetch posts');
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
     };
     fetchPosts();
   }, [setPosts]);
@@ -24,8 +32,18 @@ const ListPosts = ({ posts, setPosts }) => {
   );
 
   const handleDeletePost = async (postId) => {
-    await axios.delete(`http://localhost:3000/posts/${postId}`);
-    setPosts(posts.filter(post => post.id !== postId));
+    try {
+      const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setPosts(posts.filter(post => post.id !== postId));
+      } else {
+        console.error('Failed to delete post');
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
   };
 
   return (
