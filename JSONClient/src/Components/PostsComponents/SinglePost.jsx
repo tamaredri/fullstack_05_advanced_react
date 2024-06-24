@@ -71,17 +71,16 @@ const SinglePost = () => {
     setComments(comments.map(comment =>
       comment.id === commentId ? { ...comment, ...newData, editing: false } : comment
     ));
-    setEditedComment(null); // Clear edited comment after saving
+    setEditedComment(null); 
   };
 
   const handleCancelEdit = () => {
-    setEditedComment(null); // Clear edited comment when canceling
+    setEditedComment(null); 
   };
 
   const handleEditButtonClick = (commentId) => {
-    // Find the comment to edit
     const commentToEdit = comments.find(comment => comment.id === commentId);
-    setEditedComment(commentToEdit); // Set the comment to be edited
+    setEditedComment(commentToEdit); 
   };
 
   const handleSavePost = async () => {

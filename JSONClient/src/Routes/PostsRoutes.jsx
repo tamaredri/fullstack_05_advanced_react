@@ -25,8 +25,8 @@ const PostsRoutes = () => {
 
       {state.backgroundLocation && (
         <Routes>
-          <Route path="/new" element={<Modal><NewPost onNewPost={handleNewPost} /></Modal>} />
-          <Route path="/:id" element={<Modal><SinglePost /></Modal>} />
+          <Route path="/new" element={<NewPost onNewPost={handleNewPost} />} />
+          <Route path="/:id" element={<SinglePost />} />
         </Routes>
       )}
     </>
