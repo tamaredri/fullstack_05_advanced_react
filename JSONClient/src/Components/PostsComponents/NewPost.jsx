@@ -1,30 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Modal from './Modal.jsx';
 
-const NewPost = ({ onNewPost }) => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const navigate = useNavigate();
+const NewPost = ({ setIsAddingPost }) => {
+  const title = useRef('');
+  const body = useRef('');
+  const maxId = useRef(0);
+
   const [error, setError] = useState('');
-  const [maxId, setMaxId] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchMaxId = async () => {
+
       const response = await axios.get(`http://localhost:3000/posts`);
+      
       const ids = response.data.map(post => parseInt(post.id));
       if (ids.length > 0) {
-        setMaxId(Math.max(...ids));
-      } else {
-        setMaxId(0);
+        maxId.current = Math.max(...ids);
       }
     };
-    fetchPosts();
+    fetchMaxId();
   }, []);
 
   const handleCreatePost = async () => {
-    if (!title.trim() || !body.trim()) {
+    setIsAddingPost(false);
+
+    if (!title.current.value.trim() || !body.current.value.trim()) {
       setError('Please fill in all fields');
       return;
     }
@@ -32,33 +36,39 @@ const NewPost = ({ onNewPost }) => {
     const user = localStorage.getItem('user');
     const newPost = {
       userId: user,
-      id: String(maxId + 1),
-      title,
-      body
+      id: String(maxId.current + 1),
+      title: title.current.value,
+      body: body.current.value,
     };
 
     const response = await axios.post('http://localhost:3000/posts', newPost);
-    onNewPost(response.data);
+
+    setIsAddingPost(true);
     navigate('/homePage/posts');
   };
 
   return (
     <Modal>
-      <div>
         <h2>New Post</h2>
-        <form onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }}>
+
+        <form 
+        onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }}>
+
           <div>
             <label>Title:</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input type="text" ref={title} />
           </div>
+
           <div>
             <label>Body:</label>
-            <textarea value={body} onChange={(e) => setBody(e.target.value)} />
+            <textarea ref={body}/>
           </div>
+
           {error && <p>{error}</p>}
+
           <button type="submit">Create Post</button>
         </form>
-      </div>
+
     </Modal>
   );
 };

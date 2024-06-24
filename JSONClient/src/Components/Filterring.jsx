@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import classes from '../../modules_css/Albums.module.css'
+import classes from '../modules_css/Albums.module.css'
 
-const FilterAlbums = ({ setSearchQuery, setFilterringMethod }) => {
+const Filterring = ({ setSearchQuery, setFilterringMethod }) => {
     return (
         <div className={classes.searchContainer}>
             <label>Search by: </label>
@@ -23,4 +23,4 @@ const FilterAlbums = ({ setSearchQuery, setFilterringMethod }) => {
     );
 }
 
-export default FilterAlbums;
+export default Filterring;

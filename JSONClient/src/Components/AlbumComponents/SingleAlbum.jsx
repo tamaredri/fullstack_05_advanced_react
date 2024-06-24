@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import classes from '../../modules_css/Albums.module.css'
-
-const SingleAlbum = ({ albums, onDeleteAlbum }) => {
+const SingleAlbum = ({ album, onDeleteAlbum }) => {
   const handleDeleteAlbum = async (albumId) => {
     try {
       const photosResponse = await axios.get(`http://localhost:3000/photos?albumId=${albumId}`);
@@ -14,7 +12,7 @@ const SingleAlbum = ({ albums, onDeleteAlbum }) => {
         axios.delete(`http://localhost:3000/photos/${photoId}`)
       ));
 
-      await onDeleteAlbum(albumId); // Call onDeleteAlbum callback from props
+      await onDeleteAlbum(albumId);
 
     } catch (error) {
       console.error('Error deleting album and photos:', error);
@@ -22,19 +20,13 @@ const SingleAlbum = ({ albums, onDeleteAlbum }) => {
   };
 
   return (
-    <div>
-      <ul className={classes.albumList}>
-        {albums.map((album, index) => (
-          <li key={index}>
-            <button onClick={() => handleDeleteAlbum(album.id)}>🗑️</button>
-           
-            <Link to={`/homePage/albums/${album.id}`}>
-              {album.id}, {album.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <li>
+      <button onClick={() => handleDeleteAlbum(album.id)}>🗑️</button>
+
+      <Link to={`/homePage/albums/${album.id}`}>
+        {album.id} - {album.title}
+      </Link>
+    </li>
   );
 }
 

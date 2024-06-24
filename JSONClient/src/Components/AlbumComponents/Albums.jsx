@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import AddAlbum from './AddAlbum.jsx';
-import FilterAlbums from './FilterAlbums.jsx';
-import SingleAlbum from './AlbumList.jsx';
+import Filterring from '../Filterring.jsx';
+import SingleAlbum from './SingleAlbum.jsx';
 
 import classes from '../../modules_css/Albums.module.css'
 
@@ -49,18 +49,22 @@ const Albums = () => {
 
       <div className={classes.divider}></div>
 
-      <FilterAlbums
+      <Filterring
         setFilterringMethod={setFilterringMethod}
         setSearchQuery={setSearchQuery}
       />
 
       <div className={classes.divider}></div>
 
-
-      <SingleAlbum
-        albums={albums}
-        onDeleteAlbum={handleDeleteAlbum}
-      />
+      <ul className={classes.albumList}>
+        {albums.map((album, index) => (
+          <SingleAlbum
+            key={index}
+            album={album}
+            onDeleteAlbum={handleDeleteAlbum}
+          />
+        ))}
+      </ul>
     </div>
   );
 };
