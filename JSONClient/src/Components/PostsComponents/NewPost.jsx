@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../Modal.jsx';
+import Modal from './Modal.jsx';
 
 const NewPost = ({ onNewPost }) => {
   const [title, setTitle] = useState('');

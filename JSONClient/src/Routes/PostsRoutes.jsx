@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import ListPosts from '../Components/PostsComponents/ListPosts';
 import NewPost from '../Components/PostsComponents/NewPost';
 import SinglePost from '../Components/PostsComponents/SinglePost';
-import Modal from '../Components/Modal';
+import Modal from '../Components/PostsComponents/Modal';
 
 const PostsRoutes = () => {
   const location = useLocation();
