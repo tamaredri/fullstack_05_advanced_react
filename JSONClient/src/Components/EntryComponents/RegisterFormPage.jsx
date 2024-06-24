@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
-import axios from 'axios';
 import classes from '../../modules_css/Login.module.css'
 
 const RegisterFormPage = ({ onRegister }) => {
@@ -19,11 +18,15 @@ const RegisterFormPage = ({ onRegister }) => {
     const companyNameRef = useRef('');
     const catchPhraseRef = useRef('');
     const bsRef = useRef('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.get(`http://localhost:3000/users`);
-        const existingUsers = response.data;
+        const response = await fetch('http://localhost:3000/users');
+        if (!response.ok) {
+          setError(`HTTP error! Status: ${response.status}`);
+        }
+        const existingUsers = await response.json();
         const largestUser = existingUsers.reduce((maxId, user) => {
             return parseInt(user.id) > maxId ? parseInt(user.id) : maxId;
         }, 0);
@@ -53,12 +56,26 @@ const RegisterFormPage = ({ onRegister }) => {
         };
 
         try {
-            const user = await axios.post('http://localhost:3000/users', formData, { 'Headers': { 'Content-Type': "application/json" } });
-            onRegister(user.data.id);
+            const response = await fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(formData) 
+              });
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              const user = await response.json();
+            onRegister(user.id);
         } catch (error) {
             console.error('Error submitting form', error);
         }
     };
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <div className={classes.loginCard}>

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
 import AddAlbum from './AddAlbum.jsx';
 import Filterring from '../Filterring.jsx';
 import SingleAlbum from './SingleAlbum.jsx';
@@ -12,6 +10,7 @@ const Albums = () => {
   const [addingAlbum, setAddingAlbum] = useState(false);
   const [filteringMethod, setFilterringMethod] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchAlbums = async () => {
@@ -22,8 +21,9 @@ const Albums = () => {
       }
 
       const user = localStorage.getItem('user');
-      const response = await axios.get(`http://localhost:3000/albums?userId=${user}${filterQuery}`);
-      setAlbums(response.data);
+      const response = await fetch(`http://localhost:3000/albums?userId=${user}${filterQuery}`);
+      const data = await response.json();
+      setAlbums(data);
     };
 
     fetchAlbums();
@@ -31,12 +31,26 @@ const Albums = () => {
 
   const handleDeleteAlbum = async (albumId) => {
     try {
-      await axios.delete(`http://localhost:3000/albums/${albumId}`);
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      };
+      const response = await fetch(`http://localhost:3000/albums/${albumId}`, requestOptions);
+
+      if (!response.ok) {
+        setError(`HTTP error! Status: ${response.status}`);
+      }
       setAlbums(prevAlbums => prevAlbums.filter(album => album.id !== albumId));
     } catch (error) {
-      console.error('Error deleting album:', error);
+      setError('Error deleting album:', error);
     }
   };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div >

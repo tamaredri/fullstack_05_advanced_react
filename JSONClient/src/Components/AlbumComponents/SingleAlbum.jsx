@@ -1,23 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
-const SingleAlbum = ({ album, onDeleteAlbum }) => {
+import classes from '../../modules_css/Albums.module.css'
+
+const SingleAlbum = ({ albums, onDeleteAlbum }) => {
+  const [error, setError] = useState('');
   const handleDeleteAlbum = async (albumId) => {
     try {
-      const photosResponse = await axios.get(`http://localhost:3000/photos?albumId=${albumId}`);
-      const photoIds = photosResponse.data.map(photo => photo.id);
+      const response = await fetch(`http://localhost:3000/photos?albumId=${albumId}`);
+      if (!response.ok) {
+        setError('Network response was not ok');
+      }
+      const photosResponse = await response.json();
+      const photoIds = photosResponse.map(photo => photo.id);
 
       await Promise.all(photoIds.map(photoId =>
-        axios.delete(`http://localhost:3000/photos/${photoId}`)
+        fetch(`http://localhost:3000/photos/${photoId}`, {
+          method: 'DELETE'
+        })
       ));
+      
 
       await onDeleteAlbum(albumId);
 
     } catch (error) {
-      console.error('Error deleting album and photos:', error);
+      setError('Error deleting album and photos:', error);
     }
   };
+
+  if (error) {
+    return <div>{error}</div>;
+}
 
   return (
     <li>

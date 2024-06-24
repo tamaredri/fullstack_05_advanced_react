@@ -1,7 +1,5 @@
-// RegisterPage.js
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import classes from '../../modules_css/Login.module.css'
 
 
@@ -18,7 +16,12 @@ const RegisterPage = () => {
     try {
       const username = usernameRef.current.value;
 
-      const users = await axios.get('http://localhost:3000/users');
+      const response = await fetch('http://localhost:3000/users');
+  
+      if (!response.ok) {
+        setError(`HTTP error! Status: ${response.status}`);
+      }
+      const users = await response.json();
       const user = users.data.find(user => user.username === username);
 
       if (user) {
