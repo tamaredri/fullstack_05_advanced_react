@@ -23,7 +23,8 @@ const FullPost = () => {
   useEffect(() => {
     const fetchUserMail = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/users?id=${id}`);
+        const userId = localStorage.getItem('user');
+        const response = await fetch(`http://localhost:3000/users?id=${userId}`);
 
         if (response.ok) {
           const data = await response.json();
@@ -120,7 +121,7 @@ const FullPost = () => {
         setFinishAdding={setFinishAdding} />
 
       {error && <p>{error}</p>}
-      
+
     </Modal>
   );
 };

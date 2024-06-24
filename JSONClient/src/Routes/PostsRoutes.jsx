@@ -9,15 +9,20 @@ const PostsRoutes = () => {
   const [isAddingPost, setIsAddingPost] = useState(false);
 
   const location = useLocation();
-  const state = location.state || {};
+  const {backgroundLocation} = location.state || {};
 
   return (
     <>
-      <Routes location={state.backgroundLocation || location}>
+      <Routes location={backgroundLocation || location}>
         <Route path="/" element={<ListPosts isAddingPost={isAddingPost}  />} />
-        <Route path="/new" element={<NewPost setIsAddingPost={setIsAddingPost} />} />
-        <Route path="/:id" element={<FullPost />} />
       </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <Route path="/new" element={<NewPost setIsAddingPost={setIsAddingPost} />} />
+          <Route path="/:id" element={<FullPost />} />
+        </Routes>
+      )}
     </>
   );
 };

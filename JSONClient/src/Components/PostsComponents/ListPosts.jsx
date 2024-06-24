@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Filterring from '../Filterring';
 import SinglePost from './SinglePost';
 
@@ -10,6 +10,7 @@ const ListPosts = ({ isAddingPost }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  
   useEffect(() => {
     const fetchPosts = async () => {
       const user = localStorage.getItem('user');
@@ -74,6 +75,7 @@ const ListPosts = ({ isAddingPost }) => {
 
         ))}
       </ul>
+
 
     </div>
   );
