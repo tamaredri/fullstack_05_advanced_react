@@ -33,7 +33,7 @@ const NewPost = () => {
     const user = localStorage.getItem('user');
     await axios.post('http://localhost:3000/posts', {
       userId: user,
-      id: maxId + 1,
+      id: String(maxId + 1),
       title,
       body
     });
