@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Modal from './Modal.jsx';
 
@@ -7,7 +6,7 @@ const SinglePost = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
-  const [allCommants, setAllComments] = useState([]);
+  const [allComments, setAllComments] = useState([]);
   const [newComment, setNewComment] = useState({ name: '', email: '', body: '' });
   const [editingPost, setEditingPost] = useState(false);
   const [editedTitle, setEditedTitle] = useState('');
@@ -17,21 +16,49 @@ const SinglePost = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await axios.get(`http://localhost:3000/posts/${id}`);
-      setPost(response.data);
-      setEditedTitle(response.data.title);
-      setEditedBody(response.data.body);
+      try {
+        const response = await fetch(`http://localhost:3000/posts/${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setPost(data);
+          setEditedTitle(data.title);
+          setEditedBody(data.body);
+        } else {
+          console.error('Failed to fetch post');
+        }
+      } catch (error) {
+        console.error('Error fetching post:', error);
+      }
     };
 
     const fetchComments = async () => {
-      const response = await axios.get(`http://localhost:3000/comments?postId=${id}`);
-      setComments(response.data.map(comment => ({ ...comment, editing: false })));
+      try {
+        const response = await fetch(`http://localhost:3000/comments?postId=${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setComments(data.map(comment => ({ ...comment, editing: false })));
+        } else {
+          console.error('Failed to fetch comments');
+        }
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
     };
 
     const fetchAllComments = async () => {
-      const response = await axios.get(`http://localhost:3000/comments`);
-      setAllComments(response.data);
-    }
+      try {
+        const response = await fetch(`http://localhost:3000/comments`);
+        if (response.ok) {
+          const data = await response.json();
+          setAllComments(data);
+        } else {
+          console.error('Failed to fetch all comments');
+        }
+      } catch (error) {
+        console.error('Error fetching all comments:', error);
+      }
+    };
+
     fetchPost();
     fetchComments();
     fetchAllComments();
@@ -42,54 +69,104 @@ const SinglePost = () => {
       setError('Please fill in all fields');
       return;
     }
-  
-    
-    const maxId = Math.max(...allCommants.map(comment => comment.id), 0);
-  
-    const response = await axios.post(`http://localhost:3000/comments`, {
-      postId: parseInt(id),
-      id: String(maxId + 1),
-      name: newComment.name,
-      email: newComment.email,
-      body: newComment.body
-    });
-  
-    setComments([...comments, response.data]);
-    setNewComment({ name: '', email: '', body: '' }); // Reset input fields
-    setError('');
+
+    const maxId = Math.max(...allComments.map(comment => comment.id), 0);
+
+    try {
+      const response = await fetch(`http://localhost:3000/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          postId: parseInt(id),
+          id: String(maxId + 1),
+          name: newComment.name,
+          email: newComment.email,
+          body: newComment.body
+        })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setComments([...comments, data]);
+        setNewComment({ name: '', email: '', body: '' }); // Reset input fields
+        setError('');
+      } else {
+        console.error('Failed to add comment');
+      }
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
   };
-  
 
   const handleDeleteComment = async (commentId) => {
-    await axios.delete(`http://localhost:3000/comments/${commentId}`);
-    setComments(comments.filter(comment => comment.id !== commentId));
+    try {
+      const response = await fetch(`http://localhost:3000/comments/${commentId}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        setComments(comments.filter(comment => comment.id !== commentId));
+      } else {
+        console.error('Failed to delete comment');
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
   };
 
   const handleEditComment = async (commentId, newData) => {
     const { name, email, body } = newData;
-    await axios.patch(`http://localhost:3000/comments/${commentId}`, { name, email, body });
-    setComments(comments.map(comment =>
-      comment.id === commentId ? { ...comment, ...newData, editing: false } : comment
-    ));
-    setEditedComment(null); 
+    try {
+      const response = await fetch(`http://localhost:3000/comments/${commentId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, body })
+      });
+      if (response.ok) {
+        setComments(comments.map(comment =>
+          comment.id === commentId ? { ...comment, ...newData, editing: false } : comment
+        ));
+        setEditedComment(null);
+      } else {
+        console.error('Failed to edit comment');
+      }
+    } catch (error) {
+      console.error('Error editing comment:', error);
+    }
   };
 
   const handleCancelEdit = () => {
-    setEditedComment(null); 
+    setEditedComment(null);
   };
 
   const handleEditButtonClick = (commentId) => {
     const commentToEdit = comments.find(comment => comment.id === commentId);
-    setEditedComment(commentToEdit); 
+    setEditedComment(commentToEdit);
   };
 
   const handleSavePost = async () => {
-    await axios.patch(`http://localhost:3000/posts/${id}`, {
-      title: editedTitle,
-      body: editedBody
-    });
-    setPost({ ...post, title: editedTitle, body: editedBody });
-    setEditingPost(false);
+    try {
+      const response = await fetch(`http://localhost:3000/posts/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: editedTitle,
+          body: editedBody
+        })
+      });
+      if (response.ok) {
+        setPost({ ...post, title: editedTitle, body: editedBody });
+        setEditingPost(false);
+      } else {
+        console.error('Failed to save post');
+      }
+    } catch (error) {
+      console.error('Error saving post:', error);
+    }
   };
 
   if (!post) {
@@ -190,4 +267,3 @@ const SinglePost = () => {
 };
 
 export default SinglePost;
-
