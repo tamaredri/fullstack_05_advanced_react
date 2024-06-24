@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Filterring from '../Filterring';
 import SinglePost from './SinglePost';
 
@@ -9,7 +9,7 @@ const ListPosts = ({ isAddingPost }) => {
   const [posts, setPosts] = useState([]);
 
   const navigate = useNavigate();
-
+  const location = useLocation();
   useEffect(() => {
     const fetchPosts = async () => {
       const user = localStorage.getItem('user');
@@ -60,8 +60,7 @@ const ListPosts = ({ isAddingPost }) => {
         setFilterringMethod={setFilterringMethod}
         setSearchQuery={setSearchQuery} />
 
-
-      <button onClick={() => navigate('/homePage/posts/new')}>
+      <button onClick={() => navigate('/homePage/posts/new', { state: { backgroundLocation: location } })}>
         Create New Post
       </button>
 
@@ -70,7 +69,8 @@ const ListPosts = ({ isAddingPost }) => {
             <SinglePost 
             key={index}
             post={post}
-            onDeletePost={handleDeletePost} />
+            onDeletePost={handleDeletePost}
+            location={location} />
 
         ))}
       </ul>
