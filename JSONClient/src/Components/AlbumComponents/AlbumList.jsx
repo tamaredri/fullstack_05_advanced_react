@@ -28,7 +28,7 @@ const SingleAlbum = ({ albums, onDeleteAlbum }) => {
           <li key={index}>
             <button onClick={() => handleDeleteAlbum(album.id)}>🗑️</button>
            
-            <Link className={classes.link} to={`/homePage/albums/${album.id}`}>
+            <Link to={`/homePage/albums/${album.id}`}>
               {album.id}, {album.title}
             </Link>
           </li>

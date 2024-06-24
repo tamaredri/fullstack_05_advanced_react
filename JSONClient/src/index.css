@@ -24,10 +24,14 @@ body {
 
 a {
   font-weight: 500;
-  color: #8A5C45;
+  color: #8d380d;
   text-decoration: inherit;
 }
 a:hover {
+  color: #3A1912;
+}
+
+p, span{
   color: #3A1912;
 }
 
