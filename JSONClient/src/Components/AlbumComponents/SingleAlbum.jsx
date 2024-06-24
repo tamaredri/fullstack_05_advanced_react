@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import classes from '../../modules_css/Albums.module.css'
 
-const SingleAlbum = ({ albums, onDeleteAlbum }) => {
+const SingleAlbum = ({ album, onDeleteAlbum }) => {
   const [error, setError] = useState('');
   const handleDeleteAlbum = async (albumId) => {
     try {
