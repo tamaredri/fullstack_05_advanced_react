@@ -1,10 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef , useEffect} from 'react';
 import axios from 'axios';
 
 import classes from '../../modules_css/Todos.module.css'
 
 const SingleTodo = ({ todo, isEditable, setEditTodoId, setChangeComplete }) => {
     const editedText = useRef('');
+
+    useEffect(() => {
+        if (isEditable) {
+            editedText.current.value = todo.title;
+        }
+    }, [isEditable]);
 
     const handleToggle = async (id) => {
         try {
