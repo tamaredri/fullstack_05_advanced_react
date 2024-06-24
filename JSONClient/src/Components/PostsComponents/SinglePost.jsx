@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Modal from '../Modal.jsx';
+import Modal from './Modal.jsx';
 
 const SinglePost = () => {
   const { id } = useParams();
