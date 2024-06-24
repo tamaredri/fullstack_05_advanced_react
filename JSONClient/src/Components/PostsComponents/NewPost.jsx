@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Modal from './Modal.jsx';
 
@@ -15,9 +14,12 @@ const NewPost = ({ setIsAddingPost }) => {
   useEffect(() => {
     const fetchMaxId = async () => {
 
-      const response = await axios.get(`http://localhost:3000/posts`);
-      
-      const ids = response.data.map(post => parseInt(post.id));
+      const response = await fetch(`http://localhost:3000/posts`);
+      if (!response.ok) {
+          setError('Network response was not ok');
+      }
+      const data = await response.json();
+      const ids = data.map(post => parseInt(post.id));
       if (ids.length > 0) {
         maxId.current = Math.max(...ids);
       }
@@ -41,8 +43,16 @@ const NewPost = ({ setIsAddingPost }) => {
       body: body.current.value,
     };
 
-    const response = await axios.post('http://localhost:3000/posts', newPost);
-
+    const response = await fetch('http://localhost:3000/posts', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newPost)
+    });
+    if (!response.ok) {
+        setError('Network response was not ok, can not add this post');
+    }
     setIsAddingPost(true);
     navigate('/homePage/posts');
   };

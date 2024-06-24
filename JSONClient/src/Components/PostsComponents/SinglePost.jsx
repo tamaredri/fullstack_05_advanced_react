@@ -1,27 +1,42 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import axios from 'axios';
 
-const SinglePost = ({ post, onDeletePost }) => {
-const location = useLocation();
+const SinglePost = ({ post, onDeletePost, location }) => {
 
+  const [error, setError] = useState('');
     const handleDeletePost = async (post) => {
         try {
-            const postsResponse = await axios.get(`http://localhost:3000/comments?postId=${post}`);
-            const postIds = postsResponse.data.map(post => post.id);
+            const postsResponse = await fetch(`http://localhost:3000/comments?postId=${post}`);
+            if (!postsResponse.ok) {
+                setError('Network response was not ok, failed on getting the comments of this post');
+            }
+            const data = await postsResponse.json();
+            const postIds = data.map(post => post.id);
 
             
             await Promise.all(postIds.map(postId =>
-                axios.delete(`http://localhost:3000/comments/${postId}`)
-            ));
+              fetch(`http://localhost:3000/comments/${postId}`, {
+                  method: 'DELETE'
+              }).then(response => {
+                  if (!response.ok) {
+                      setError('Network response was not ok, failed on deleting the comments of this post');
+                  }
+              })
+          ));
+          
             
             await onDeletePost(post);
 
         } catch (error) {
-            console.error('Error deleting Post and comments:', error);
+            setError('Error deleting Post and comments:', error);
         }
     };
+
+    if (error) {
+      return <div>{error}</div>;
+    }
+
     return (
         <li >
             <Link to={`/homePage/posts/${post.id}`} state={{ backgroundLocation: location }}>
