@@ -1,21 +1,21 @@
 import React, { useRef } from 'react';
+import classes from '../../modules_css/Albums.module.css'
 
-const FilterAlbums = () => {
-    const searchQuery = useRef('');
-    const searchCriterion = useRef('');
+const FilterAlbums = ({ setSearchQuery, setFilterringMethod }) => {
     return (
-        <div>
+        <div className={classes.searchContainer}>
             <label>Search by: </label>
 
-            <select ref={searchCriterion}>
+            <select
+                onChange={(e) => { setFilterringMethod(e.target.value) }}>
                 <option value="">None</option>
-                <option value="serial">Serial Number</option>
+                <option value="id">Serial Number</option>
                 <option value="title">Title</option>
             </select>
 
             <input
                 type="text"
-                ref={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value) }}
                 placeholder="Search query"
             />
 

@@ -1,0 +1,95 @@
+.divider{
+  width: 100%;
+  height: 1px;
+  background-color: #3A1912;
+  margin: 10px auto;
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*
+    Filter
+*/
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .searchContainer label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .searchContainer select, 
+  .searchContainer input {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #CDCDC8;
+  }
+  
+  .searchContainer select:focus, 
+  .searchContainer input:focus {
+    outline: none;
+    border-color: #3A1912;
+  }
+  
+  .searchContainer select {
+    background-color: #f9f9f9;
+  }
+  
+  .searchContainer input {
+    width: 40%;
+  }
+
+
+  
+/*
+    add album
+*/
+.add{
+  padding: 10px;
+}
+
+.add button{
+  margin: 10px;
+}
+
+.add input {
+  padding: 5px 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #CDCDC8;
+}
+
+
+/*
+    album list
+*/
+
+.albumList{
+  list-style: none;
+}
+
+.link{
+  color: #CDCDC8;
+}
+
+.albumList button{
+  background-color: transparent;
+}
+
+.albumList button:hover{
+  text-shadow: 0 4px 8px rgba(58, 25, 18, 0.5);
+  border: transparent;
+}

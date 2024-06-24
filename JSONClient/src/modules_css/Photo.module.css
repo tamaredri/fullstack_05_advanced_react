@@ -1,0 +1,73 @@
+/*
+  add itams
+*/
+.add{
+  padding: 10px;
+}
+
+.add button{
+  margin: 10px;
+}
+
+.add input {
+  padding: 5px 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #CDCDC8;
+}
+
+
+/*
+    photo container
+*/
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px; /* Adjust the gap between grid items as needed */
+    padding: 0;
+    list-style: none;
+  }
+  
+  .gridItem {
+    background-color: #8A5C45;
+    padding: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    transition: transform 0.3s;
+  }
+  
+  .gridItem:hover {
+    transform: scale(1.05);
+  }
+
+  .gridItem div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gridItem img{
+    width: 90%;
+    display: inline-block;
+  }
+
+
+/*
+    edit photo
+*/
+
+.editContainer input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0; /* Space between inputs */
+    border: 1px solid #ced4da; /* Border color */
+    border-radius: 4px; /* Rounded corners for inputs */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
+

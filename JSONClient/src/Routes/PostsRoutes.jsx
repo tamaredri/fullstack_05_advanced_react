@@ -45,7 +45,7 @@ const PostsRoutes = () => {
     );
 };
 
-export default PostsRoutes;*/
+export default PostsRoutes;
 
 /*import React from 'react';
 import ListPosts from '../Components/ListPosts'
